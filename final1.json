@@ -1,0 +1,154 @@
+{
+  "survey_start": "问卷调查开始",
+  "responses": [
+    {
+      "question": "请问自上次随访以来，您的症状有何变化？（改善/恶化/不变）",
+      "answer": "改善"
+    },
+    {
+      "question": "您是否出现了新的症状？如果是，请描述新出现的症状。",
+      "answer": "无"
+    },
+    {
+      "question": "您对当前治疗方案的满意度如何？（高/中/低）",
+      "answer": "高"
+    },
+    {
+      "question": "您是否遵循医嘱进行治疗？如果不是，请说明原因。",
+      "answer": "没有，因为我感觉自身症状比之前减轻了不少，所以我减少了用药频率"
+    },
+    {
+      "question": "您在治疗过程中是否遇到了相关副作用？如果是，请描述副作用情况。",
+      "answer": "有，略微恶心"
+    },
+    {
+      "question": "您是否吸烟？（是/否）",
+      "answer": "是"
+    },
+    {
+      "question": "您的吸烟年限和每天吸烟的支数是多少？",
+      "answer": "2年，每天4支",
+      "smoking_years": "2",
+      "cigarettes_per_day": "4"
+    },
+    {
+      "question": "您的饮酒习惯如何？（不饮酒/少量饮酒/经常大量饮酒）",
+      "answer": "不饮酒"
+    },
+    {
+      "question": "您是否经常运动？（经常运动/缺乏运动）",
+      "answer": "经常运动"
+    },
+    {
+      "question": "您的运动频率和强度如何？",
+      "answer": "每周两次",
+      "exercise_frequency": "每周两次"
+    },
+    {
+      "question": "您的口味偏好是什么？（偏咸/偏淡/适中）",
+      "answer": "适中"
+    },
+    {
+      "question": "您的荤素搭配如何？（偏荤/偏素/均衡）",
+      "answer": "均衡"
+    },
+    {
+      "question": "您吃蔬菜和水果的频率如何？（每日/3-4天/周/≤2天/周）",
+      "answer": "3-4天/周"
+    },
+    {
+      "question": "您的家族中是否有人患有脑卒中？（无/有，与本人关系：父亲/母亲/兄弟姐妹/不详）",
+      "answer": "无"
+    },
+    {
+      "question": "您的家族中是否有人患有冠心病？（无/有，与本人关系：父亲/母亲/兄弟姐妹/不详）",
+      "answer": "无"
+    },
+    {
+      "question": "您的家族中是否有人患有高血压？（无/有，与本人关系：父亲/母亲/兄弟姐妹/不详）",
+      "answer": "无"
+    },
+    {
+      "question": "您的家族中是否有人患有糖尿病？（无/有，与本人关系：父亲/母亲/兄弟姐妹/不详）",
+      "answer": "无"
+    },
+    {
+      "question": "您是否有脑血管病史？（无/有，脑血管病类型：脑梗死/脑出血/蛛网膜下腔出血/短暂性脑缺血发作(TIA)）",
+      "answer": "无"
+    },
+    {
+      "question": "您是否有心脏病史？（无/有，心脏病类型：冠心病/房颤/瓣膜性心脏病/其他）",
+      "answer": "无"
+    },
+    {
+      "question": "您是否被诊断为高血压？如果是，确诊时间和用药情况如何？",
+      "answer": "没有"
+    },
+    {
+      "question": "您是否家庭自测血压？如果是，测量频率如何？",
+      "answer": "不常测"
+    },
+    {
+      "question": "您是否被诊断为血脂异常？如果是，血脂异常类型和用药情况如何？您的血脂测量频率如何？",
+      "answer": "没有"
+    },
+    {
+      "question": "您是否被诊断为糖尿病？如果是，确诊时间和用药情况如何？您是否服用降糖药？如果是，血糖控制情况如何？",
+      "answer": "没有"
+    },
+    {
+      "question": "您的身高、腰围和体重是多少？",
+      "answer": "188cm 75cm 75kg",
+      "height_cm": "188",
+      "waist_cm": "75",
+      "weight_kg": "75",
+      "height_cm_num": 188,
+      "waist_cm_num": 75,
+      "weight_kg_num": 75
+    },
+    {
+      "question": "您的BMI（体重指数）是多少？",
+      "answer": "21",
+      "bmi": "21",
+      "bmi_num": 21.0
+    },
+    {
+      "question": "您的收缩压和舒张压是多少？",
+      "answer": "分别是100mmHg和65mmHg",
+      "systolic_bp_mmhg": "100",
+      "diastolic_bp_mmhg": "65",
+      "systolic_bp_mmhg_num": 100,
+      "diastolic_bp_mmhg_num": 65
+    },
+    {
+      "question": "您的心脏是否有杂音？您的心律是否整齐？",
+      "answer": "没有，整齐",
+      "heart_murmur": "没有",
+      "heart_rhythm": "整齐"
+    },
+    {
+      "question": "您是否有以下风险因素？\n- 血脂异常\n- 糖尿病\n- 房颤或瓣膜性心脏病\n- 吸烟史\n- 明显超重或肥胖\n- 运动缺乏\n- 脑卒中家族史\n\n请针对每个风险因素回答“是”或“否”。",
+      "answer": "吸烟史",
+      "risk_factors": {
+        "dyslipidemia": "否",
+        "diabetes": "否",
+        "afib_or_valvular_hd": "否",
+        "smoking_history": "是",
+        "overweight_or_obesity": "否",
+        "physical_inactivity": "否",
+        "stroke_family_history": "否"
+      }
+    },
+    {
+      "question": "根据风险因素的评分，您的整体风险等级是？（低危/中危/高危）",
+      "answer": "低危"
+    }
+  ],
+  "summary": {
+    "total_risk_factors_identified": 1,
+    "identified_risk_factors": ["吸烟史"],
+    "overall_risk_level": "低危"
+  },
+  "survey_end": "感谢您完成本次随访调查问卷。如果您有任何其他问题或需要进一步的医疗咨询，请随时告知。祝您健康！",
+  "session_status": "结束"
+}

@@ -1,0 +1,7 @@
+openai
+python-dotenv
+langchain
+langchain_openai
+langchain_community
+langchain_core
+python-dotenv

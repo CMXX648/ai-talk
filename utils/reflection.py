@@ -32,7 +32,7 @@ def optimize_output(initial_output, feedback):
          "content": f"根据以下反馈对初始输出进行优化：\n\n初始输出：\n{initial_output}\n\n反馈：\n{feedback}\n\n请生成改进后的输出。"},
     ]
 
-    response = perform_chat(qwen_client, "qwen-troble", optimization_prompt, temperature=0.85, max_tokens=60000)
+    response = perform_chat(qwen_client, "qwen-plus", optimization_prompt, temperature=0.85, max_tokens=60000)
     return response
 
 

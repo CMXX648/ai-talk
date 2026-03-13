@@ -22,3 +22,5 @@ python design/designer.py
 ```shell
 python survey/main.py
 ```
+
+source venv/bin/activate

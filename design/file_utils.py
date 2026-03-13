@@ -5,7 +5,6 @@ from design.prompt import PROMPT
 
 def upload_and_extract_file_content(file_path):
     try:
-        # 上传文件并创建文件对象
         with Path(file_path).open('rb') as file:
             file_object = kimi_client.files.create(file=file, purpose="file-extract")
 
