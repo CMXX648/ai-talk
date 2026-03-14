@@ -22,7 +22,7 @@ def generate_feedback(initial_output):
         {"role": "system",
          "content": f"请对以下内容提供反馈和改进建议：\n\n{initial_output}\n\n请详细描述需要改进的部分并提供具体建议。"},
     ]
-    response = perform_chat(qwen_client, "qwen-troble", feedback_prompt, temperature=0.85, max_tokens=60000)
+    response = perform_chat(qwen_client, "qwen-plus", feedback_prompt, temperature=0.85, max_tokens=60000)
     return response
 
 

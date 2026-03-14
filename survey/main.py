@@ -5,6 +5,7 @@ from utils.chat import kimi_chat, qwen_chat, record_dialogue_history, contains_j
 from survey.prompt import PROMPT
 from utils.reflection import perform_reflection
 from utils.chat import build_warmup_messages, kimi_model, chat_with_model, qwen_model
+from utils.rag import generate_health_advice
 
 
 user_name = "用户"
@@ -90,8 +91,17 @@ if __name__ == "__main__":
     summary_prompt = "请将以下对话记录转换为 JSON 格式：\n" + dialogue_history
     summary = chat_with_model(qwen_model, [HumanMessage(content=summary_prompt)])
     record_dialogue_history(summary, 'final1.json')
-
+ 
     
     # 在最终生成建议之前应用反思机制
     final_output = perform_reflection(dialogue_history)
+    print("\n=== 反思建议 ===")
     print(final_output)
+    
+    # 使用RAG生成基于健康知识的准确建议
+    rag_advice = generate_health_advice(dialogue_history)
+    print("\n=== RAG健康建议 ===")
+    print(rag_advice)
+    
+    # 保存RAG建议到文件
+    record_dialogue_history(rag_advice, 'rag_advice.txt')
