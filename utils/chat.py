@@ -82,6 +82,8 @@ def qwen_chat(user_content, functions=None,max_tokens=5000):
     response = qwen_model.invoke(messages, config={"max_tokens": max_tokens})
     return response.content
 
+
+
 def kimi(system_prompt, user_content, functions=None, max_tokens=5000):
     messages = [
         SystemMessage(content=system_prompt),

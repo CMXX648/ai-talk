@@ -13,6 +13,7 @@ PROMPT = """
 11. After the Q&A session, the entire questionnaire will be scored according to Module 9. Only the final total score and risk level need to be provided.
 12. Read the above requirements carefully and complete the tasks as required.
 """
+
 # 医疗随访智能助手的角色
 PROMPT1 = """
 本次对于脑卒患后医疗随访，我作为医疗随访的问卷调查负责人，我将遵循以下规则，以中文进行提问并保证提问干练爽快以方便助手记录：
@@ -71,9 +72,9 @@ PROMPT2 = """
 
 ### 任务描述
 - **输入**：一段包含脑卒中患者随访对话的文字记录（${dialogue}）。
-- **输出**：一个符合上述规则和示例格式的JSON对象。
+- **输出**: 一个符合上述规则和示例格式,且仅包含对话记录的JSON格式文件。
 
-请确保最终生成的JSON文件准确反映了对话内容，并且结构清晰、易于理解。如果有任何不确定的地方，请尽量保持原始对话的信息完整性。
+请确保最终生成的JSON文件准确反映了对话内容,并且结构清晰、易于理解。如果有任何不确定的地方,请尽量保持原始对话的信息完整性。
 """
 
 

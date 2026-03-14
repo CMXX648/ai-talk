@@ -3,6 +3,7 @@ python-dotenv
 langchain
 langchain_openai
 langchain_community
+langchain-text-splitters
 langchain_core
 python-dotenv
 zhipuai

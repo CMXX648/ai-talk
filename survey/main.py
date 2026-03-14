@@ -55,11 +55,6 @@ def interactive_survey(model, warmup_messages, output_file):
         dialogue_history += f"{user_name}  {user_response} \n"
         messages.append(HumanMessage(content=user_response))
 
-
-        # # 检索相似回答并构建新提示
-        # retrieved_answers = retrieve_answers(user_response)
-        # prompt = build_prompt(user_response, retrieved_answers)
-
         # 检查问卷是否完成
         if is_survey_complete(contains_json(dialogue_history), dialogue_history) or user_response == '结束':
             break
@@ -85,23 +80,19 @@ if __name__ == "__main__":
     warmup = build_warmup_messages()
 
     # 使用kimi用作提问
-    messages, dialogue_history = interactive_survey(kimi_model, warmup, output_file)
+    messages, dialogue_history = interactive_survey(kimi_chat, warmup, output_file)
 
     # 使用qwen作为json格式问卷输出
-    summary_prompt = "请将以下对话记录转换为 JSON 格式：\n" + dialogue_history
-    summary = chat_with_model(qwen_model, [HumanMessage(content=summary_prompt)])
+    summary = chat_with_model(qwen_chat, [HumanMessage(content=dialogue_history)])
     record_dialogue_history(summary, 'final1.json')
  
     
     # 在最终生成建议之前应用反思机制
-    final_output = perform_reflection(dialogue_history)
-    print("\n=== 反思建议 ===")
-    print(final_output)
+    # final_output = perform_reflection(dialogue_history)
+    # print("\n=== 反思建议 ===")
+    # print(final_output)
     
     # 使用RAG生成基于健康知识的准确建议
     rag_advice = generate_health_advice(dialogue_history)
     print("\n=== RAG健康建议 ===")
     print(rag_advice)
-    
-    # 保存RAG建议到文件
-    record_dialogue_history(rag_advice, 'rag_advice.txt')
