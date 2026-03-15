@@ -1,239 +1,86 @@
-以下是将提供的对话记录转换为结构化、语义清晰的 JSON 格式的结果。该 JSON 遵循以下设计原则：
-
-- 顶层为 `survey` 对象，包含元信息（如开始/结束时间可留空或设为占位符）和 `respondent`（受访者）及 `responses`（所有问题-答案对）；
-- 每个问题以标准化字段名（snake_case）映射，避免口语化表述，合并逻辑相关项（如身高/腰围/体重 → `height_cm`, `waist_cm`, `weight_kg`）；
-- 数值型字段（年龄、BMI、血压等）保留原始数字类型；分类选项统一转为小写字符串（如 `"male"`、`"improved"`）；
-- 多选/列表类风险因素单独提取为布尔数组 `risk_factors`，并补充说明 `risk_factors_details` 以保留用户原始回答（“吸烟史”）；
-- 对跳过问题（如戒烟年限）或条件性问题（仅适用于已戒烟者），不生成字段，保持简洁；
-- 所有 `user_input` 字段保留原始文本（便于审计），同时 `value` 字段为标准化解析结果；
-- 补充 `completed_at` 和 `status` 体现问卷完成状态。
-
 ```json
 {
-  "survey": {
-    "id": null,
-    "started_at": null,
-    "completed_at": null,
-    "status": "completed",
-    "respondent": {
-      "name": "刘德华",
-      "gender": "male",
-      "age": 60
+  "调查问卷": {
+    "疾病状况监测": {
+      "姓名": "吴亦凡",
+      "性别": "女",
+      "年龄": "46",
+      "症状变化": "改善",
+      "新出现的症状": "没有"
     },
-    "responses": [
-      {
-        "question_id": "symptom_change_since_last_followup",
-        "question_text": "自上次随访以来，您的症状有何变化？（改善/恶化/不变）",
-        "user_input": "改善",
-        "value": "improved"
+    "治疗方案遵循情况": {
+      "治疗方案满意度": "中",
+      "是否遵循医嘱": "否",
+      "未遵循原因": "出现了头晕所以减少了用药频率",
+      "治疗相关副作用": "头晕恶心"
+    },
+    "生活方式": {
+      "吸烟": {
+        "是否吸烟": "否"
       },
-      {
-        "question_id": "new_symptoms",
-        "question_text": "您是否出现了新的症状？如果是，请描述新出现的症状。",
-        "user_input": "没有",
-        "value": "none"
+      "饮酒": {
+        "饮酒习惯": "不饮酒"
       },
-      {
-        "question_id": "treatment_satisfaction",
-        "question_text": "您对当前治疗方案的满意度如何？（高/中/低）",
-        "user_input": "高",
-        "value": "high"
+      "运动习惯": {
+        "是否经常运动": "偶尔运动",
+        "运动频率和强度": "每周两次"
       },
-      {
-        "question_id": "adherence_to_medical_advice",
-        "question_text": "您是否遵循医嘱进行治疗？如果不是，请说明原因。",
-        "user_input": "是的",
-        "value": true
-      },
-      {
-        "question_id": "treatment_side_effects",
-        "question_text": "您在治疗过程中是否遇到了相关副作用？如果是，请描述副作用情况。",
-        "user_input": "没有",
-        "value": "none"
-      },
-      {
-        "question_id": "smoking_status",
-        "question_text": "您是否吸烟？（是/否）",
-        "user_input": "是",
-        "value": true
-      },
-      {
-        "question_id": "smoking_history",
-        "question_text": "如果正在吸烟，您的吸烟年限和每天吸烟的支数是多少？",
-        "user_input": "40年，每天10支",
-        "value": {
-          "years": 40,
-          "cigarettes_per_day": 10
-        }
-      },
-      {
-        "question_id": "alcohol_consumption",
-        "question_text": "您的饮酒习惯如何？（不饮酒/少量饮酒/经常大量饮酒）",
-        "user_input": "少量饮酒",
-        "value": "light"
-      },
-      {
-        "question_id": "physical_activity_frequency",
-        "question_text": "您是否经常运动？（经常运动/缺乏运动）",
-        "user_input": "偶尔运动",
-        "value": "occasional"
-      },
-      {
-        "question_id": "exercise_frequency_and_intensity",
-        "question_text": "您的运动频率和强度如何？",
-        "user_input": "每周两次",
-        "value": "twice_weekly"
-      },
-      {
-        "question_id": "salt_preference",
-        "question_text": "您的口味偏好是什么？（偏咸/偏淡/适中）",
-        "user_input": "偏淡",
-        "value": "light"
-      },
-      {
-        "question_id": "diet_balance",
-        "question_text": "您的荤素搭配如何？（偏荤/偏素/均衡）",
-        "user_input": "均衡",
-        "value": "balanced"
-      },
-      {
-        "question_id": "vegetable_fruit_frequency",
-        "question_text": "您吃蔬菜和水果的频率如何？（每日/3-4天/周/≤2天/周）",
-        "user_input": "≤2天/周",
-        "value": "less_than_2_days_per_week"
-      },
-      {
-        "question_id": "family_history_stroke",
-        "question_text": "您的家族中是否有人患有脑卒中？（无/有，与本人关系：父亲/母亲/兄弟姐妹/不详）",
-        "user_input": "没有",
-        "value": "none"
-      },
-      {
-        "question_id": "family_history_coronary_heart_disease",
-        "question_text": "您的家族中是否有人患有冠心病？（无/有，与本人关系：父亲/母亲/兄弟姐妹/不详）",
-        "user_input": "无",
-        "value": "none"
-      },
-      {
-        "question_id": "family_history_hypertension",
-        "question_text": "您的家族中是否有人患有高血压？（无/有，与本人关系：父亲/母亲/兄弟姐妹/不详）",
-        "user_input": "无",
-        "value": "none"
-      },
-      {
-        "question_id": "family_history_diabetes",
-        "question_text": "您的家族中是否有人患有糖尿病？（无/有，与本人关系：父亲/母亲/兄弟姐妹/不详）",
-        "user_input": "无",
-        "value": "none"
-      },
-      {
-        "question_id": "cerebrovascular_history",
-        "question_text": "您是否有脑血管病史？（无/有，脑血管病类型：脑梗死/脑出血/蛛网膜下腔出血/短暂性脑缺血发作(TIA)）",
-        "user_input": "无",
-        "value": "none"
-      },
-      {
-        "question_id": "cardiac_history",
-        "question_text": "您是否有心脏病史？（无/有，心脏病类型：冠心病/房颤/瓣膜性心脏病/其他）",
-        "user_input": "无",
-        "value": "none"
-      },
-      {
-        "question_id": "hypertension_diagnosis",
-        "question_text": "您是否被诊断为高血压？如果是，确诊时间和用药情况如何？",
-        "user_input": "无",
-        "value": "none"
-      },
-      {
-        "question_id": "dyslipidemia_diagnosis",
-        "question_text": "您是否被诊断为血脂异常？如果是，血脂异常类型和用药情况如何？您的血脂测量频率如何？",
-        "user_input": "无",
-        "value": "none"
-      },
-      {
-        "question_id": "diabetes_diagnosis",
-        "question_text": "您是否被诊断为糖尿病？如果是，确诊时间和用药情况如何？您是否服用降糖药？如果是，血糖控制情况如何？",
-        "user_input": "无",
-        "value": "none"
-      },
-      {
-        "question_id": "anthropometrics",
-        "question_text": "您的身高、腰围和体重是多少？",
-        "user_input": "190cm,70cm,76kg",
-        "value": {
-          "height_cm": 190,
-          "waist_cm": 70,
-          "weight_kg": 76
-        }
-      },
-      {
-        "question_id": "bmi",
-        "question_text": "您的BMI（体重指数）是多少？",
-        "user_input": "22",
-        "value": 22.0
-      },
-      {
-        "question_id": "blood_pressure",
-        "question_text": "您的收缩压和舒张压是多少？",
-        "user_input": "94,83",
-        "value": {
-          "systolic_mmhg": 94,
-          "diastolic_mmhg": 83
-        }
-      },
-      {
-        "question_id": "cardiac_exam_findings",
-        "question_text": "您的心脏是否有杂音？您的心律是否整齐？",
-        "user_input": "没有。，整齐",
-        "value": {
-          "murmur": false,
-          "rhythm_regular": true
-        }
-      },
-      {
-        "question_id": "risk_factors_assessment",
-        "question_text": "您是否有以下风险因素？- 血脂异常 - 糖尿病 - 房颤或瓣膜性心脏病 - 吸烟史 - 明显超重或肥胖 - 运动缺乏 - 脑卒中家族史",
-        "user_input": "吸烟史",
-        "value": [
-          "smoking_history"
-        ]
-      },
-      {
-        "question_id": "overall_risk_level",
-        "question_text": "根据风险因素的评分，您的整体风险等级是？（低危/中危/高危）",
-        "user_input": "低危",
-        "value": "low_risk"
+      "膳食习惯": {
+        "口味偏好": "偏淡",
+        "荤素搭配": "偏素",
+        "蔬菜水果摄入频率": "≤2天/周"
       }
-    ],
-    "risk_factors": {
-      "smoking_history": true,
-      "dyslipidemia": false,
-      "diabetes": false,
-      "atrial_fibrillation_or_valvular_heart_disease": false,
-      "obesity": false,
-      "physical_inactivity": false,
-      "stroke_family_history": false
     },
-    "summary": {
-      "overall_risk_level": "low_risk",
-      "key_findings": [
-        "当前症状改善，无新发症状",
-        "治疗依从性好，无副作用",
-        "吸烟史（40年，10支/日）",
-        "血压偏低（94/83 mmHg），BMI正常（22）",
-        "无心脑血管病史及家族史",
-        "饮食均衡、口味偏淡，但蔬果摄入不足（≤2天/周）"
-      ]
+    "家族史": {
+      "脑卒中": {
+        "家族中是否有人患病": "无"
+      },
+      "冠心病": {
+        "家族中是否有人患病": "无"
+      },
+      "高血压": {
+        "家族中是否有人患病": "无"
+      },
+      "糖尿病": {
+        "家族中是否有人患病": "无"
+      }
+    },
+    "既往病史及控制情况": {
+      "脑血管病史": {
+        "是否有病史": "无"
+      },
+      "心脏病史": {
+        "是否有病史": "无"
+      },
+      "高血压": {
+        "是否被诊断": "无"
+      },
+      "血脂异常": {
+        "是否被诊断": "无"
+      },
+      "糖尿病": {
+        "是否被诊断": "是",
+        "确诊时间": "2023年",
+        "用药情况": "每天两次胰岛素",
+        "血糖控制情况": "控制妥当"
+      }
+    },
+    "体格检查信息": {
+      "一般体征": {
+        "身高": "168cm",
+        "腰围": "73cm",
+        "体重": "70kg",
+        "BMI": "20"
+      },
+      "现测血压": {
+        "收缩压": "140",
+        "舒张压": "90"
+      },
+      "心脏听诊": {
+        "心脏是否有杂音": "没有",
+        "心律是否整齐": "整齐"
+      }
     }
   }
 }
 ```
-
-✅ **说明**：
-- 所有 `user_input` 字段忠实保留原始文本（含标点、空格），便于溯源；
-- `value` 字段为清洗后、机器可读的结构化数据（如布尔值、数字、枚举字符串、嵌套对象）；
-- `risk_factors` 是独立扁平化对象，便于快速统计分析；
-- `summary` 提供临床摘要，支持医生快速阅片；
-- 字段命名采用国际医疗数据常用惯例（如 `systolic_mmhg`, `light` 表示少量饮酒），兼容 FHIR 或 OMOP 等标准。
-
-如需导出为 CSV、生成 PDF 报告、或对接电子病历系统（EMR），可基于此 JSON 进一步扩展。

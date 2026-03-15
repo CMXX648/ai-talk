@@ -14,6 +14,7 @@ with open("Q.txt",'r',encoding='utf-8') as fr:
     questionnaire_text = f"这是问卷内容。\n \n \"{file_content}\""
 
 # 预热消息列表构建函数（只调用一次）
+# 使用模型1作提问员
 def build_warmup_messages():
     return [
         SystemMessage(content=PROMPT1),
@@ -21,6 +22,8 @@ def build_warmup_messages():
         HumanMessage(content=questionnaire_text),
         AIMessage(content="好的，当你输入”问卷开始“后我将按照你提供的问卷问题顺序逐个提问")
     ]
+
+
 def chat_with_model(model, messages, max_tokens=5000):
     response = model.invoke(messages, config={"max_tokens": max_tokens})
     return response.content
@@ -48,22 +51,7 @@ qwen_model = ChatOpenAI(
 )
 
 
-# 使用模型1作提问员
-def kimi_chat(user_content, functions=None,max_tokens=50000):
-    messages = [
-        {"role": "system",
-         "content": PROMPT1},
-        {"role": "assistant",
-         "content": "好的，请提供随访问卷，我将作为医疗随访智能助手向用户进行规范化提问"},
-        {"role": "user",
-         "content": questionnaire_text},
-        {"role": "assistant",
-         "content": "好的，当你输入”问卷开始“后我将按照你提供的问卷问题顺序逐个提问"},
-        {"role": "user",
-         "content": user_content}
-    ]
-    response = kimi_model.invoke(messages, config={"max_tokens": max_tokens})
-    return response.content
+
 
 # 使用模型2作归纳员
 def qwen_chat(user_content, functions=None,max_tokens=5000):

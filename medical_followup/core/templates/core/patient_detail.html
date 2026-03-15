@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ patient.name }} - 患者详情</title>
+</head>
+<body>
+    <h1>{{ patient.name }} - 患者详情</h1>
+    <p>性别：{{ patient.gender }}</p>
+    <p>年龄：{{ patient.age }}</p>
+    <p>电话：{{ patient.phone }}</p>
+    
+    <h2>随访记录</h2>
+    <a href="/admin/core/followuprecord/add/?patient={{ patient.id }}">添加随访记录</a>
+    <table border="1">
+        <tr>
+            <th>随访日期</th>
+            <th>医生</th>
+            <th>内容</th>
+            <th>健康评估</th>
+            <th>建议措施</th>
+            <th>下次随访</th>
+            <th>操作</th>
+        </tr>
+        {% for record in records %}
+        <tr>
+            <td>{{ record.record_date|date:"Y-m-d" }}</td>
+            <td>{{ record.doctor.name }}</td>
+            <td>{{ record.content }}</td>
+            <td>{{ record.health_assessment }}</td>
+            <td>{{ record.recommendations }}</td>
+            <td>{{ record.next_follow_up|date:"Y-m-d" }}</td>
+            <td>
+                <a href="/admin/core/followuprecord/{{ record.id }}/change/">编辑</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{% url 'patient_list' %}">返回患者列表</a>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>医疗随访管理系统</title>
+</head>
+<body>
+    <h1>医疗随访管理系统</h1>
+    <div>
+        <p>患者数量：{{ patient_count }}</p>
+        <p>医生数量：{{ doctor_count }}</p>
+        <p>随访记录数量：{{ record_count }}</p>
+    </div>
+    <div>
+        <a href="{% url 'patient_list' %}">患者管理</a> |
+        <a href="{% url 'doctor_list' %}">医生管理</a> |
+        <a href="/admin/">后台管理</a>
+    </div>
+</body>
+</html>
