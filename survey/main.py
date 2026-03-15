@@ -30,7 +30,7 @@ def interactive_survey(model, warmup_messages, output_file, patient_name=None):
         if patient_info:
             # 根据患者性别生成称呼
             title = "先生" if patient_info['gender'] == "男" else "女士"
-            greeting = f"您好，{patient_info['name']}{title}！"
+            greeting = f"您好，{patient_info['name'][0]}{title}！"
             print(f"{bot_name}: {greeting}")
             dialogue_history += f"{bot_name}: {greeting}\n"
             
@@ -82,7 +82,6 @@ if __name__ == "__main__":
     
     if not patients:
         print("数据库中没有患者信息，请先在Django管理后台添加患者。")
-        print("访问地址: http://127.0.0.1:8001/admin/")
         patient_name = None
     else:
         print("请选择患者进行随访：")
